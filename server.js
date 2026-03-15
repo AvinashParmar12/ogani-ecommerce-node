@@ -12,7 +12,7 @@ const connectDB = require("./config/db");
 // 2️⃣ IMPORT MODELS
 // ===============================
 const User = require("./models/user");
-const Product = require("./models/product");
+const Product = require("./models/Product");
 const Cart = require("./models/cart");
 const Order = require("./models/order");
 
