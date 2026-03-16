@@ -13,25 +13,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-     <style>
-        .user-dropdown{
-    position: relative;
-    display: inline-block;
-}
+    <style>
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
 
-.dropdown-menu{
-    display: none;
-    position: absolute;
-    background: white;
-    padding: 10px;
-    list-style: none;
-    border: 1px solid #ddd;
-}
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            padding: 10px;
+            list-style: none;
+            border: 1px solid #ddd;
+        }
 
-.user-dropdown:hover .dropdown-menu{
-    display: block;
-}
-       </style> 
+        .user-dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
     <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-    
+
 </head>
 
 <body>
@@ -58,16 +58,16 @@
         </div>
 
         <div class="header__cart">
-                    <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="/cart"><i class="fa fa-shopping-bag"></i> <span id="cart-count">
+            <ul>
+                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                <li><a href="/cart"><i class="fa fa-shopping-bag"></i> <span id="cart-count">
                             <%= cartCount || 0 %>
                         </span></a></li>
-                    </ul>
-                    <div class="header__cart__price">item: <span>$150.00</span></div>
-                </div>
+            </ul>
+            <div class="header__cart__price">item: <span>$150.00</span></div>
+        </div>
 
-        
+
         <div class="humberger__menu__widget">
             <div class="header__top__right__language">
                 <img src="img/language.png" alt="">
@@ -84,18 +84,24 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/products">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
+                        <li><a href="#">Shop Details</a></li>
+                        <li><a href="/cart">Shoping Cart</a></li>
+                        <li><a href="/checkout">Check Out</a></li>
+                        <li><a href="#">Blog Details</a></li>
+                        <% if(user && user.isAdmin) { %>
+
+                            <li><a href="/admin/add-product">Add Product</a></li>
+                            <li><a href="/admin/products">Manage Products</a></li>
+
+                            <% } %>
                     </ul>
                 </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -146,29 +152,29 @@
                             </div>
                             <div class="header__top__right__auth">
 
-<% if(user) { %>
+                                <% if(user) { %>
 
-    <div class="user-dropdown">
+                                    <div class="user-dropdown">
 
-        <a href="#">
-            <i class="fa fa-user"></i>
-            <%= user.name %>
-        </a>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                            <%= user.name %>
+                                        </a>
 
-        <ul class="dropdown-menu">
-            <li><a href="/logout">Logout</a></li>
-        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/logout">Logout</a></li>
+                                        </ul>
 
-    </div>
+                                    </div>
 
-<% } else { %>
+                                    <% } else { %>
 
-    <a href="/login"><i class="fa fa-user"></i> Login</a> |
-    <a href="/register">Register</a>
+                                        <a href="/login"><i class="fa fa-user"></i> Login</a> |
+                                        <a href="/register">Register</a>
 
-<% } %>
+                                        <% } %>
 
-</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -178,24 +184,32 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="/img/logo.png" alt=""></a>
+                        <a href="/"><img src="/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="/products">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="#">Shop Details</a></li>
+                                    <li><a href="/cart">Shoping Cart</a></li>
+                                    <li><a href="/checkout">Check Out</a></li>
+                                    <li><a href="#">Blog Details</a></li>
+                                    <% if(user && user.isAdmin) { %>
+                                        <li><a href="/admin">Dashboard</a></li>
+                                        <li><a href="/admin/add-product">Add Product</a></li>
+                                        <li><a href="/admin/products">Manage Products</a></li>
+                                        <li><a href="/admin/orders">Manage Order</a></li>
+                                        <li><a href="/admin/users">Manage User</a></li>
+
+                                        <% } %>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -232,7 +246,7 @@
                             <i class="fa fa-bars"></i>
                             <span>All departments</span>
                         </div>
-                        <ul>
+                        <!-- <ul>
                             <li><a href="#">Fresh Meat</a></li>
                             <li><a href="#">Vegetables</a></li>
                             <li><a href="#">Fruit & Nut Gifts</a></li>
@@ -244,7 +258,7 @@
                             <li><a href="#">Papayaya & Crisps</a></li>
                             <li><a href="#">Oatmeal</a></li>
                             <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -269,14 +283,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="/img/hero/banner.jpg">
+                    <!-- <div class="hero__item set-bg" data-setbg="/img/hero/banner.jpg">
                         <div class="hero__text">
                             <span>FRUIT FRESH</span>
                             <h2>Vegetable <br />100% Organic</h2>
                             <p>Free Pickup and Delivery Available</p>
                             <a href="#" class="primary-btn">SHOP NOW</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

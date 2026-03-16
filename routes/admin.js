@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/Product");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-
+const adminAuth = require("../middleware/adminAuth");
+//models
+const Product = require("../models/Product");
+const Order = require("../models/order");
+const User = require("../models/user");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/uploads");
@@ -15,6 +18,26 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+router.use(adminAuth);
+
+//Admin Dashboard
+router.get("/", async (req, res) => {
+  try {
+    const productCount = await Product.countDocuments();
+    const orderCount = await Order.countDocuments();
+    const userCount = await User.countDocuments();
+
+    res.render("admin/dashboard", {
+      productCount,
+      orderCount,
+      userCount,
+    });
+  } catch (error) {
+    console.log(error);
+    res.send("Error loading dashboard");
+  }
+});
 
 // GET - Show Add Product Page
 router.get("/add-product", (req, res) => {
@@ -30,7 +53,7 @@ router.post("/add-product", upload.single("image"), async (req, res) => {
       name,
       price,
       description,
-      image: req.file.filename,
+      image: req.file ? req.file.filename : null,
     });
 
     res.redirect("/admin/add-product?success=1");
@@ -58,6 +81,16 @@ router.get("/products", async (req, res) => {
 // -------------------------------
 router.get("/delete-product/:id", async (req, res) => {
   try {
+    const product = await Product.findById(req.params.id);
+
+    if (product.image) {
+      const imgPath = path.join("public/uploads", product.image);
+
+      if (fs.existsSync(imgPath)) {
+        fs.unlinkSync(imgPath);
+      }
+    }
+
     await Product.findByIdAndDelete(req.params.id);
 
     res.redirect("/admin/products");
@@ -88,6 +121,8 @@ router.post("/edit-product/:id", upload.single("image"), async (req, res) => {
   try {
     const { name, price, description } = req.body;
 
+    const product = await Product.findById(req.params.id);
+
     const updateData = {
       name,
       price,
@@ -107,6 +142,30 @@ router.post("/edit-product/:id", upload.single("image"), async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send("Error updating product");
+  }
+});
+
+//orders
+router.get("/orders", async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 });
+
+    res.render("admin/orders", { orders });
+  } catch (error) {
+    console.log(error);
+    res.send("Error loading orders");
+  }
+});
+
+//users
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.render("admin/users", { users });
+  } catch (error) {
+    console.log(error);
+    res.send("Error loading users");
   }
 });
 

@@ -1,0 +1,78 @@
+<%- include('../partials/header') %>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Orders</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.ejs">Home</a>
+                            <span>Orders</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+
+
+
+    <!-- Product Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>User ID</th>
+                                    <th>Total</th>
+                                    <th>Items</th>
+                                    <th>Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% orders.forEach(order=> { %>
+                                    <tr>
+                                        <td class="admin_product_img">
+                                            <%= order._id %>
+                                        </td>
+                                        <td class="admin_product_name">
+                                            <h5>
+                                                <%= order.userId %>
+                                            </h5>
+                                        </td>
+                                        <td class="sadmin_product_price">
+                                            <%= order.total %>
+                                        </td>
+                                        <td class="admin_product_action">
+
+                                            <% order.items.forEach(item=> { %>
+                                                <div>
+                                                    <%= item.name %> (x<%= item.qty %>)
+                                                </div>
+                                                <% }) %>
+                                        </td>
+                                        <td>
+                                            <%= new Date(order.createdAt).toLocaleDateString() %>
+                                        </td>
+
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Product Section End -->
+    <%- include('../partials/footer') %>
